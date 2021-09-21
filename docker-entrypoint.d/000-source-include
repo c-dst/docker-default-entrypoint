@@ -1,0 +1,30 @@
+#! /bin/bash
+set -eo pipefail
+shopt -s nullglob
+
+# Generic log function
+_log() {
+	local type="$1"; shift
+ 	printf '%s [%s] [Entrypoint %s]: %s\n' "$(date --rfc-3339=seconds)" "$type" "${0##*/}" "$*"
+}
+
+# Log severity INFO
+_log_info() {
+	_log INFO "$*"
+}
+
+# Log severity WARINNG
+_log_warn() {
+	_log WARNING "$*"
+}
+
+# Log severity ERROR
+_log_error() {
+	_log ERROR "$*"
+	exit 1
+}
+
+# Log severity DEBUG
+_log_debug() {
+	_log DEBUG "$*"
+}

@@ -1,16 +1,15 @@
-#!/bin/sh
-  
+#! /bin/bash
+
 DIR=/docker-entrypoint.d
 
 if [ -f /etc/alpine-release ] ; then
-  OPTION=""
+  OPTION="--exit-on-error"
 else 
-  OPTION="--verbose"
+  OPTION="--verbose --exit-on-error"
 fi
 
-if [[ -d "$DIR" ]] ; then
-
-  /bin/run-parts $OPTION "$DIR"
+if [ -d "$DIR" ] ; then
+  /bin/run-parts $OPTION "$DIR" || exit 1
 fi
 
 exec "$@"
