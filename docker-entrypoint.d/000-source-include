@@ -5,6 +5,8 @@ shopt -s nullglob
 # Generic log function
 _log() {
 	local type="$1"; shift
+	# return if no message
+	[ -z "$*" ] && return
  	printf '%s [%s] [Entrypoint %s]: %s\n' "$(date --rfc-3339=seconds)" "$type" "${0##*/}" "$*"
 }
 
@@ -26,5 +28,7 @@ _log_error() {
 
 # Log severity DEBUG
 _log_debug() {
+	# return if DEBUG not set
+	[[ -z "$DEBUG" || $DEBUG -ne 1 ]] && return 
 	_log DEBUG "$*"
 }
